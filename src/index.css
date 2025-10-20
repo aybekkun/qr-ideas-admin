@@ -1,0 +1,16 @@
+*,
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', 'Segoe UI', sans-serif;
+}
+
+.no-title-margin .ant-list-item-meta-title {
+  margin-bottom: 0 !important;
+
+}
