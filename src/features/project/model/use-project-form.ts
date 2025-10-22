@@ -99,7 +99,6 @@ export const useProjectForm = () => {
 		formData.append("contact", values.contact)
 		formData.append("region_id", String(values.region_id || ""))
 		formData.append("district", values.district || "")
-		formData.append("url", values.url || "")
 
 		// --- Обработка файлов ---
 		values.files.forEach((file: any) => {
@@ -110,6 +109,8 @@ export const useProjectForm = () => {
 		})
 		if (deletedImages.length > 0) {
 			formData.append("deleting_images", JSON.stringify(deletedImages))
+		} else {
+			formData.append("deleting_images", "[]")
 		}
 
 		if (isParamsFormValidate<IProject>(params)) {

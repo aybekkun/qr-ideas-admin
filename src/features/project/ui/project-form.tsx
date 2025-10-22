@@ -213,9 +213,7 @@ export const ProjectForm = () => {
 				{/* Район */}
 
 				{/* URL */}
-				<Form.Item<IProjectForm> name="url" label="URL">
-					<Input />
-				</Form.Item>
+			
 
 				{/* Файлы */}
 				<Form.Item<IProjectForm>
