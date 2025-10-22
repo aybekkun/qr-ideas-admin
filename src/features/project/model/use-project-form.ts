@@ -109,9 +109,7 @@ export const useProjectForm = () => {
 		})
 		if (deletedImages.length > 0) {
 			formData.append("deleting_images", JSON.stringify(deletedImages))
-		} else {
-			formData.append("deleting_images", "[]")
-		}
+		} 
 
 		if (isParamsFormValidate<IProject>(params)) {
 			updateMutation.mutate({ id: params.id, form: formData })
