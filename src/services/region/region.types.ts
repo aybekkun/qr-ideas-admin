@@ -1,10 +1,14 @@
 export type IRegion = {
 	id: number
-	name: string
+	name: {
+		kaa: string | null
+		uz: string | null
+	}
 }
 
 export type IRegionForm = {
-	name: string
+	name_kaa: string
+	name_uz: string
 }
 
 export type IRegionUpdate = IRegionForm & {

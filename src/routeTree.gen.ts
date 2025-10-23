@@ -14,6 +14,7 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutRegionIndexRouteImport } from './routes/_layout/region/index'
 import { Route as LayoutProjectIndexRouteImport } from './routes/_layout/project/index'
+import { Route as LayoutDistrictIndexRouteImport } from './routes/_layout/district/index'
 import { Route as LayoutCategoryIndexRouteImport } from './routes/_layout/category/index'
 import { Route as LayoutProjectIdRouteImport } from './routes/_layout/project/$id'
 
@@ -41,6 +42,11 @@ const LayoutProjectIndexRoute = LayoutProjectIndexRouteImport.update({
   path: '/project/',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutDistrictIndexRoute = LayoutDistrictIndexRouteImport.update({
+  id: '/district/',
+  path: '/district/',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutCategoryIndexRoute = LayoutCategoryIndexRouteImport.update({
   id: '/category/',
   path: '/category/',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/project/$id': typeof LayoutProjectIdRoute
   '/category': typeof LayoutCategoryIndexRoute
+  '/district': typeof LayoutDistrictIndexRoute
   '/project': typeof LayoutProjectIndexRoute
   '/region': typeof LayoutRegionIndexRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/project/$id': typeof LayoutProjectIdRoute
   '/category': typeof LayoutCategoryIndexRoute
+  '/district': typeof LayoutDistrictIndexRoute
   '/project': typeof LayoutProjectIndexRoute
   '/region': typeof LayoutRegionIndexRoute
 }
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/project/$id': typeof LayoutProjectIdRoute
   '/_layout/category/': typeof LayoutCategoryIndexRoute
+  '/_layout/district/': typeof LayoutDistrictIndexRoute
   '/_layout/project/': typeof LayoutProjectIndexRoute
   '/_layout/region/': typeof LayoutRegionIndexRoute
 }
@@ -85,10 +94,18 @@ export interface FileRouteTypes {
     | '/'
     | '/project/$id'
     | '/category'
+    | '/district'
     | '/project'
     | '/region'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/' | '/project/$id' | '/category' | '/project' | '/region'
+  to:
+    | '/auth'
+    | '/'
+    | '/project/$id'
+    | '/category'
+    | '/district'
+    | '/project'
+    | '/region'
   id:
     | '__root__'
     | '/_layout'
@@ -96,6 +113,7 @@ export interface FileRouteTypes {
     | '/_layout/'
     | '/_layout/project/$id'
     | '/_layout/category/'
+    | '/_layout/district/'
     | '/_layout/project/'
     | '/_layout/region/'
   fileRoutesById: FileRoutesById
@@ -142,6 +160,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProjectIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/district/': {
+      id: '/_layout/district/'
+      path: '/district'
+      fullPath: '/district'
+      preLoaderRoute: typeof LayoutDistrictIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/category/': {
       id: '/_layout/category/'
       path: '/category'
@@ -163,6 +188,7 @@ interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutProjectIdRoute: typeof LayoutProjectIdRoute
   LayoutCategoryIndexRoute: typeof LayoutCategoryIndexRoute
+  LayoutDistrictIndexRoute: typeof LayoutDistrictIndexRoute
   LayoutProjectIndexRoute: typeof LayoutProjectIndexRoute
   LayoutRegionIndexRoute: typeof LayoutRegionIndexRoute
 }
@@ -171,6 +197,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutProjectIdRoute: LayoutProjectIdRoute,
   LayoutCategoryIndexRoute: LayoutCategoryIndexRoute,
+  LayoutDistrictIndexRoute: LayoutDistrictIndexRoute,
   LayoutProjectIndexRoute: LayoutProjectIndexRoute,
   LayoutRegionIndexRoute: LayoutRegionIndexRoute,
 }

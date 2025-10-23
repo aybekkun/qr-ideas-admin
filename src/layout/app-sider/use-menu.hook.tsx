@@ -25,6 +25,11 @@ export const menuItems = [
 		icon: <MenuUnfoldOutlined />,
 		label: "Регионы",
 	},
+	{
+		key: "/district",
+		icon: <MenuUnfoldOutlined />,
+		label: "Районы",
+	},
 ]
 export const useMenu = () => {
 	return menuItems

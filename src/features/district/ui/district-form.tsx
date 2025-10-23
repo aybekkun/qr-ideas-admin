@@ -1,14 +1,27 @@
 import { FormModal } from "@/components/shared"
-import { type IRegionForm } from "@/services/region"
-import { Form, Input } from "antd"
-import { useRegionForm } from "../model"
+import { type IDistrictForm } from "@/services/district"
+import { Form, Input, Select } from "antd"
+import { useDistrictForm } from "../model"
 
-export const RegionForm = () => {
-	const { form, onFinish, isLoading } = useRegionForm()
+export const DistrictForm = () => {
+	const { form, onFinish, isLoading, regions } = useDistrictForm()
 	return (
 		<FormModal title={"категорию"} form={form} loading={isLoading}>
 			<Form form={form} layout="vertical" onFinish={onFinish}>
-				<Form.Item<IRegionForm>
+				<Form.Item<IDistrictForm>
+					name="region_id"
+					label="Регион"
+					rules={[{ required: true, message: "Выберите регион" }]}
+				>
+					<Select
+						placeholder="Выберите категорию"
+						options={regions?.data?.map((r) => ({
+							label: r.name.kaa,
+							value: r.id,
+						}))}
+					/>
+				</Form.Item>
+				<Form.Item<IDistrictForm>
 					name={"name_kaa"}
 					label={"Название (KR)"}
 					rules={[
@@ -22,7 +35,7 @@ export const RegionForm = () => {
 				>
 					<Input />
 				</Form.Item>
-				<Form.Item<IRegionForm>
+				<Form.Item<IDistrictForm>
 					name={"name_uz"}
 					label={"Название (UZ)"}
 					rules={[

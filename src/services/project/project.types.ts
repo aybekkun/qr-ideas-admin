@@ -30,7 +30,10 @@ export type IProject = {
 		id: number
 		name: string
 	} | null
-	district: string | null
+	district: {
+		id: number
+		name: string
+	} | null
 	url: string
 	created_at: string
 	images: string[]
@@ -54,6 +57,7 @@ export type IProjectForm = {
 	region_id: number
 	district: string | null
 	url?: string
+	district_id: number
 	files: any[]
 }
 export type UploadFile = {

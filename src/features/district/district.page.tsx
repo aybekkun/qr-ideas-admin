@@ -1,25 +1,25 @@
 import { PageHeader } from "@/components/shared"
 import { AddButton, DataTable } from "@/components/ui"
-import { useRegionColumns } from "./model"
 import { useFilters } from "@/hooks"
-import { useGetAllRegion } from "@/services/region"
-import { RegionForm } from "./ui/region-form"
+import { useGetAllDistrict } from "@/services/district"
+import { useDistrictColumns } from "./model"
+import { DistrictForm } from "./ui"
 
-export const RegionPage = () => {
-	const { filters, setFilters } = useFilters("/_layout/region/")
-	const { data, isLoading } = useGetAllRegion({
+export const DistrictPage = () => {
+	const { filters, setFilters } = useFilters("/_layout/district/")
+	const { data, isLoading } = useGetAllDistrict({
 		limit: 10,
 		page: filters.page ?? 1,
 	})
 
-	const columns = useRegionColumns()
+	const columns = useDistrictColumns()
 
 	return (
 		<>
-			<PageHeader title="Регион">
+			<PageHeader title="Район">
 				<AddButton />
 			</PageHeader>
-			<RegionForm />
+			<DistrictForm />
 			<DataTable
 				loading={isLoading}
 				rowKey={(record) => record.id}

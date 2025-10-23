@@ -1,29 +1,40 @@
 import { FormModal } from "@/components/shared"
-import {
-	Form,
-	Input,
-	InputNumber,
-	DatePicker,
-	Select,
-	Upload,
-	Row,
-	Col,
-} from "antd"
 import type { IProjectForm } from "@/services/project"
+import { Col, DatePicker, Form, Input, Row, Select, Upload } from "antd"
 
+import { InputPrice } from "@/components/ui"
 import { InboxOutlined } from "@ant-design/icons"
+import { PatternFormat } from "react-number-format"
 import { useProjectForm } from "../model"
 
 export const ProjectForm = () => {
-	const { form, onFinish, isLoading, categories, regions, setDeletedImages } =
-		useProjectForm()
+	const {
+		form,
+		onFinish,
+		districts,
+		isLoading,
+		categories,
+		regions,
+		setDeletedImages,
+		selectedRegion,
+		setSelectedRegion,
+	} = useProjectForm()
 
 	return (
 		<FormModal width={900} title={"проект"} form={form} loading={isLoading}>
 			<Form form={form} layout="vertical" onFinish={onFinish}>
 				{/* Категория */}
 				<Row gutter={[12, 12]}>
-					<Col span={12}>
+					<Col span={6}>
+						<Form.Item<IProjectForm>
+							name="deadline"
+							label="Начало работы"
+							rules={[{ required: true, message: "Выберите дату дедлайна" }]}
+						>
+							<DatePicker style={{ width: "100%" }} format="YYYY-MM-DD" />
+						</Form.Item>
+					</Col>
+					<Col span={6}>
 						<Form.Item<IProjectForm>
 							name="category_id"
 							label="Категория"
@@ -38,29 +49,72 @@ export const ProjectForm = () => {
 							/>
 						</Form.Item>
 					</Col>
-					<Col span={12}>
+
+					<Col span={6}>
 						<Form.Item<IProjectForm>
 							name="region_id"
 							label="Регион"
 							rules={[{ required: true, message: "Выберите регион" }]}
 						>
 							<Select
+								onChange={(value) => {
+									setSelectedRegion(value)
+									// сбрасываем выбранный район при смене региона
+									form.setFieldsValue({ district_id: undefined })
+								}}
 								placeholder="Выберите категорию"
 								options={regions?.data?.map((r) => ({
-									label: r.name,
+									label: r.name.kaa,
 									value: r.id,
 								}))}
 							/>
 						</Form.Item>
 					</Col>
+					<Col span={6}>
+						<Form.Item<IProjectForm>
+							name="district_id"
+							label="Район / Махалля"
+							rules={[{ required: true, message: "Введите Район / Махалля" }]}
+						>
+							<Select
+								showSearch
+								optionFilterProp="label"
+								disabled={!selectedRegion} 
+								placeholder="Выберите Район / Махалля"
+								options={districts.map((d) => ({
+									label: d.name.kaa,
+									value: d.id,
+								}))}
+								filterOption={(input, option) =>
+									(option?.label ?? "")
+										.toLowerCase()
+										.includes(input.toLowerCase())
+								}
+							/>
+						</Form.Item>
+					</Col>
 				</Row>
-				<Form.Item<IProjectForm>
-					name="district"
-					label="Район / Махалля"
-					rules={[{ required: true, message: "Введите Район / Махалля" }]}
-				>
-					<Input />
-				</Form.Item>
+				<Row gutter={[12, 12]}>
+					<Col span={12}>
+						<Form.Item<IProjectForm>
+							name="initiator"
+							label="Инициатор"
+							rules={[{ required: true, message: "Введите инициатора" }]}
+						>
+							<Input placeholder="Kegeyli Agro Group" />
+						</Form.Item>
+					</Col>
+					<Col span={12}>
+						<Form.Item<IProjectForm>
+							label={"Контакт"}
+							name={"contact"}
+							rules={[{ required: true }]}
+							initialValue={""}
+						>
+							<PatternFormat format={"+998 ## ### ## ##"} customInput={Input} />
+						</Form.Item>
+					</Col>
+				</Row>
 				{/* Название */}
 				<Row gutter={[12, 12]}>
 					<Col span={12}></Col>
@@ -73,7 +127,7 @@ export const ProjectForm = () => {
 							label="Название (KR)"
 							rules={[{ required: true, message: "Введите название (KR)" }]}
 						>
-							<Input />
+							<Input placeholder="Gúrishti qayta islew kompleksi" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
@@ -82,7 +136,7 @@ export const ProjectForm = () => {
 							label="Название (UZ)"
 							rules={[{ required: true, message: "Введите название (UZ)" }]}
 						>
-							<Input />
+							<Input placeholder="Guruchni qayta ishlash majmuasi" />
 						</Form.Item>
 					</Col>
 				</Row>
@@ -93,17 +147,22 @@ export const ProjectForm = () => {
 							label="Описание (KR)"
 							rules={[{ required: true, message: "Введите описание (KR)" }]}
 						>
-							<Input.TextArea rows={3} />
+							<Input.TextArea
+								placeholder="Zamonaviy saralash va tozalash texnologiyasiga ega guruchni maydalash va qadoqlash zavodi."
+								rows={3}
+							/>
 						</Form.Item>
 					</Col>
 					<Col span={12}>
-						{" "}
 						<Form.Item<IProjectForm>
 							name="description_uz"
 							label="Описание (UZ)"
 							rules={[{ required: true, message: "Введите описание (UZ)" }]}
 						>
-							<Input.TextArea rows={3} />
+							<Input.TextArea
+								placeholder="Zamonaviy saralash va tozalash texnologiyasiga ega guruchni maydalash va qadoqlash zavodi."
+								rows={3}
+							/>
 						</Form.Item>
 					</Col>
 				</Row>
@@ -115,7 +174,7 @@ export const ProjectForm = () => {
 							label="Цель (KR)"
 							rules={[{ required: true, message: "Введите Цель" }]}
 						>
-							<Input />
+							<Input placeholder="Jergilikli gúrishti ishki hám eksport bazarları ushın qayta islew hám qadaqlaw" />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
@@ -124,7 +183,7 @@ export const ProjectForm = () => {
 							label="Цель (UZ)"
 							rules={[{ required: true, message: "Введите Цель" }]}
 						>
-							<Input />
+							<Input placeholder="Mahalliy guruchni ichki va eksport bozorlari uchun qayta ishlash va qadoqlash" />
 						</Form.Item>
 					</Col>
 				</Row>
@@ -136,68 +195,51 @@ export const ProjectForm = () => {
 						<Form.Item<IProjectForm>
 							name="production_kaa"
 							label="Производство (KR)"
-							rules={[{ required: true, message: "Введите Производство" }]}
 						>
-							<Input />
+							<Input placeholder="Jılına 3500 tonna." />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item<IProjectForm>
 							name="production_uz"
 							label="Производство (UZ)"
-							rules={[{ required: true, message: "Введите Производство" }]}
 						>
-							<Input />
+							<Input placeholder="Yiliga 3500 tonna" />
 						</Form.Item>
 					</Col>
 				</Row>
 
 				{/* Количество рабочих */}
-				<Form.Item<IProjectForm>
-					name="job"
-					label="Количество рабочих мест"
-					rules={[{ required: true, message: "Введите количество рабочих" }]}
-				>
-					<InputNumber min={1} style={{ width: "100%" }} />
-				</Form.Item>
-
-				{/* Дедлайн */}
-				<Form.Item<IProjectForm>
-					name="deadline"
-					label="Начало работы"
-					rules={[{ required: true, message: "Выберите дату дедлайна" }]}
-				>
-					<DatePicker style={{ width: "100%" }} format="YYYY-MM-DD" />
-				</Form.Item>
-
-				{/* Банковский партнер */}
-				<Form.Item<IProjectForm>
-					name="banking_partner"
-					label="Банковский партнёр"
-					rules={[{ required: true, message: "Введите партнера" }]}
-				>
-					<Input />
-				</Form.Item>
 				<Row gutter={[12, 12]}>
 					<Col span={12}>
 						<Form.Item<IProjectForm>
-							name="initiator"
-							label="Инициатор"
-							rules={[{ required: true, message: "Введите инициатора" }]}
+							name="job"
+							label="Количество рабочих мест"
+							rules={[
+								{ required: true, message: "Введите количество рабочих" },
+							]}
 						>
-							<Input />
+							<InputPrice
+								min={1}
+								style={{ width: "100%" }}
+								placeholder="150 000"
+							/>
 						</Form.Item>
 					</Col>
 					<Col span={12}>
 						<Form.Item<IProjectForm>
-							name="contact"
-							label="Контакт"
-							rules={[{ required: true, message: "Введите контакт" }]}
+							name="banking_partner"
+							label="Банковский партнёр"
+							rules={[{ required: true, message: "Введите партнера" }]}
 						>
-							<Input />
+							<Input placeholder="Agrobank Qaraqalpaq bo‘limi" />
 						</Form.Item>
 					</Col>
 				</Row>
+
+				{/* Дедлайн */}
+
+				{/* Банковский партнер */}
 
 				{/* <Form.Item<IProjectForm>
 					name="region_id"
@@ -213,7 +255,6 @@ export const ProjectForm = () => {
 				{/* Район */}
 
 				{/* URL */}
-			
 
 				{/* Файлы */}
 				<Form.Item<IProjectForm>

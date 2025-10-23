@@ -13,6 +13,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { Form } from "antd"
 import { useEffect, useState } from "react"
 import { useGetAllRegion } from "@/services/region"
+import { useGetAllDistrict } from "@/services/district"
+import { formatPhoneForm } from "@/utils"
 
 export const useProjectForm = () => {
 	const [form] = Form.useForm<IProjectForm>()
@@ -20,9 +22,11 @@ export const useProjectForm = () => {
 	const { resetParams, params } = useFormModalStore()
 	const { message } = useMessage()
 	const [deletedImages, setDeletedImages] = useState<string[]>([])
+	const [selectedRegion, setSelectedRegion] = useState<number | null>(null)
 
 	const { data: categories } = useGetAllCategory({})
 	const { data: regions } = useGetAllRegion({})
+	const { data: districts } = useGetAllDistrict({})
 	const createMutation = useMutation({
 		mutationFn: ProjectService.create,
 		onSuccess: () => {
@@ -65,9 +69,9 @@ export const useProjectForm = () => {
 				deadline: dayjs(params.deadline),
 				banking_partner: params.banking_partner,
 				initiator: params.initiator,
-				contact: params.contact,
+				contact: formatPhoneForm(params.contact),
 				region_id: params.region?.id,
-				district: params.district,
+				district_id: params.district?.id,
 				url: params.url,
 				files: params.images.map((url, index) => ({
 					uid: String(index),
@@ -76,7 +80,12 @@ export const useProjectForm = () => {
 					url,
 				})),
 			})
+			setSelectedRegion(params.region?.id || null)
 			setDeletedImages([])
+			return () => {
+				setDeletedImages([])
+				setSelectedRegion(null)
+			}
 		}
 	}, [form, params])
 
@@ -98,7 +107,7 @@ export const useProjectForm = () => {
 		formData.append("initiator", values.initiator)
 		formData.append("contact", values.contact)
 		formData.append("region_id", String(values.region_id || ""))
-		formData.append("district", values.district || "")
+		formData.append("district_id", String(values.district_id || ""))
 
 		// --- Обработка файлов ---
 		values.files.forEach((file: any) => {
@@ -109,7 +118,7 @@ export const useProjectForm = () => {
 		})
 		if (deletedImages.length > 0) {
 			formData.append("deleting_images", JSON.stringify(deletedImages))
-		} 
+		}
 
 		if (isParamsFormValidate<IProject>(params)) {
 			updateMutation.mutate({ id: params.id, form: formData })
@@ -117,6 +126,8 @@ export const useProjectForm = () => {
 			createMutation.mutate(formData)
 		}
 	}
+	const filteredDistricts =
+		districts?.data?.filter((d) => d.region.id === selectedRegion) || []
 
 	return {
 		form,
@@ -125,5 +136,8 @@ export const useProjectForm = () => {
 		isLoading: updateMutation.isPending || createMutation.isPending,
 		categories,
 		regions,
+		districts: filteredDistricts,
+		selectedRegion,
+		setSelectedRegion,
 	}
 }

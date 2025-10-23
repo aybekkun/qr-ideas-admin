@@ -1,11 +1,11 @@
-import type { IRegion } from "@/services/region"
+import type { IDistrict } from "@/services/district"
 import { Space } from "antd"
 import type { ColumnsType } from "antd/es/table"
-import { DeleteRegion } from "./delete-region"
+import { DeleteDistrict } from "./delete-district"
 import { EditButton } from "@/components/ui"
 
-export const useRegionColumns = () => {
-	const columns: ColumnsType<IRegion> = [
+export const useDistrictColumns = () => {
+	const columns: ColumnsType<IDistrict> = [
 		{
 			title: "Название (KR)",
 			dataIndex: ["name", "kaa"],
@@ -16,7 +16,6 @@ export const useRegionColumns = () => {
 			dataIndex: ["name", "uz"],
 			key: "name",
 		},
-
 		{
 			title: "Действия",
 			key: "actions",
@@ -24,7 +23,7 @@ export const useRegionColumns = () => {
 			render: (record) => (
 				<Space>
 					<EditButton params={record} />
-					<DeleteRegion id={record.id} />
+					<DeleteDistrict id={record.id} />
 				</Space>
 			),
 		},

@@ -2,7 +2,7 @@ import type { IProject } from "@/services/project"
 import { Space } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import { DeleteProject } from "./delete-project"
-import { formatDate, formatPrice } from "@/utils"
+import { formatDate, formatPhone, formatPrice } from "@/utils"
 import { EditButton } from "@/components/ui"
 
 export const useProjectColumns = (): ColumnsType<IProject> => {
@@ -44,6 +44,7 @@ export const useProjectColumns = (): ColumnsType<IProject> => {
 			title: "Контакт",
 			dataIndex: "contact",
 			key: "contact",
+			render:formatPhone
 		},
 		{
 			title: "Действия",
