@@ -1,25 +1,26 @@
 import { PageHeader } from "@/components/shared"
-import { AddButton, DataTable } from "@/components/ui"
 import { useFilters } from "@/hooks"
-import { useGetAllDistrict } from "@/services/district"
-import { useDistrictColumns } from "./model"
-import { DistrictForm } from "./ui"
+import { useGetAllVideo } from "@/services/video"
+import { useVideoColumns } from "./model"
+import { AddButton, DataTable } from "@/components/ui"
+import { VideoForm } from "./ui/video-form"
 
-export const DistrictPage = () => {
-	const { filters, setFilters } = useFilters("/_layout/district/")
-	const { data, isLoading } = useGetAllDistrict({
+export const VideoPage = () => {
+	const { filters, setFilters } = useFilters("/_layout/")
+	const { data, isLoading } = useGetAllVideo({
 		limit: 10,
 		page: filters.page ?? 1,
 	})
 
-	const columns = useDistrictColumns()
+	const columns = useVideoColumns()
 
 	return (
 		<>
-			<PageHeader title="Район">
+			<PageHeader title="Бизнес идеи">
 				<AddButton />
 			</PageHeader>
-			<DistrictForm />
+
+			<VideoForm />
 			<DataTable
 				loading={isLoading}
 				rowKey={(record) => record.id}

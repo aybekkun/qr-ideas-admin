@@ -2,6 +2,7 @@ import {
 	FundProjectionScreenOutlined,
 	HomeOutlined,
 	MenuUnfoldOutlined,
+	ToolOutlined,
 } from "@ant-design/icons"
 
 export const menuItems = [
@@ -14,6 +15,11 @@ export const menuItems = [
 		key: "/project",
 		icon: <FundProjectionScreenOutlined />,
 		label: "Проекты",
+	},
+	{
+		key: "/hardware",
+		icon: <ToolOutlined />,
+		label: "Оборудование",
 	},
 	{
 		key: "/category",

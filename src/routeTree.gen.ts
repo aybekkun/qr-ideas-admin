@@ -14,6 +14,7 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutRegionIndexRouteImport } from './routes/_layout/region/index'
 import { Route as LayoutProjectIndexRouteImport } from './routes/_layout/project/index'
+import { Route as LayoutHardwareIndexRouteImport } from './routes/_layout/hardware/index'
 import { Route as LayoutDistrictIndexRouteImport } from './routes/_layout/district/index'
 import { Route as LayoutCategoryIndexRouteImport } from './routes/_layout/category/index'
 import { Route as LayoutProjectIdRouteImport } from './routes/_layout/project/$id'
@@ -42,6 +43,11 @@ const LayoutProjectIndexRoute = LayoutProjectIndexRouteImport.update({
   path: '/project/',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutHardwareIndexRoute = LayoutHardwareIndexRouteImport.update({
+  id: '/hardware/',
+  path: '/hardware/',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutDistrictIndexRoute = LayoutDistrictIndexRouteImport.update({
   id: '/district/',
   path: '/district/',
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/project/$id': typeof LayoutProjectIdRoute
   '/category': typeof LayoutCategoryIndexRoute
   '/district': typeof LayoutDistrictIndexRoute
+  '/hardware': typeof LayoutHardwareIndexRoute
   '/project': typeof LayoutProjectIndexRoute
   '/region': typeof LayoutRegionIndexRoute
 }
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/project/$id': typeof LayoutProjectIdRoute
   '/category': typeof LayoutCategoryIndexRoute
   '/district': typeof LayoutDistrictIndexRoute
+  '/hardware': typeof LayoutHardwareIndexRoute
   '/project': typeof LayoutProjectIndexRoute
   '/region': typeof LayoutRegionIndexRoute
 }
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/_layout/project/$id': typeof LayoutProjectIdRoute
   '/_layout/category/': typeof LayoutCategoryIndexRoute
   '/_layout/district/': typeof LayoutDistrictIndexRoute
+  '/_layout/hardware/': typeof LayoutHardwareIndexRoute
   '/_layout/project/': typeof LayoutProjectIndexRoute
   '/_layout/region/': typeof LayoutRegionIndexRoute
 }
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/project/$id'
     | '/category'
     | '/district'
+    | '/hardware'
     | '/project'
     | '/region'
   fileRoutesByTo: FileRoutesByTo
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
     | '/project/$id'
     | '/category'
     | '/district'
+    | '/hardware'
     | '/project'
     | '/region'
   id:
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/_layout/project/$id'
     | '/_layout/category/'
     | '/_layout/district/'
+    | '/_layout/hardware/'
     | '/_layout/project/'
     | '/_layout/region/'
   fileRoutesById: FileRoutesById
@@ -160,6 +172,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProjectIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/hardware/': {
+      id: '/_layout/hardware/'
+      path: '/hardware'
+      fullPath: '/hardware'
+      preLoaderRoute: typeof LayoutHardwareIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/district/': {
       id: '/_layout/district/'
       path: '/district'
@@ -189,6 +208,7 @@ interface LayoutRouteChildren {
   LayoutProjectIdRoute: typeof LayoutProjectIdRoute
   LayoutCategoryIndexRoute: typeof LayoutCategoryIndexRoute
   LayoutDistrictIndexRoute: typeof LayoutDistrictIndexRoute
+  LayoutHardwareIndexRoute: typeof LayoutHardwareIndexRoute
   LayoutProjectIndexRoute: typeof LayoutProjectIndexRoute
   LayoutRegionIndexRoute: typeof LayoutRegionIndexRoute
 }
@@ -198,6 +218,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutProjectIdRoute: LayoutProjectIdRoute,
   LayoutCategoryIndexRoute: LayoutCategoryIndexRoute,
   LayoutDistrictIndexRoute: LayoutDistrictIndexRoute,
+  LayoutHardwareIndexRoute: LayoutHardwareIndexRoute,
   LayoutProjectIndexRoute: LayoutProjectIndexRoute,
   LayoutRegionIndexRoute: LayoutRegionIndexRoute,
 }

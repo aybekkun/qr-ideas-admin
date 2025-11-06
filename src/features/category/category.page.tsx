@@ -25,7 +25,7 @@ export const CategoryPage = () => {
 				rowKey={(record) => record.id}
 				pagination={{
 					current: filters.page ?? 1,
-					total: data?.pagination.count ?? 0,
+					total: data?.pagination?.count ?? 0,
 					onChange: (page) => setFilters({ page: page }),
 					showSizeChanger: false,
 				}}
