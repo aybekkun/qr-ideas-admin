@@ -28,7 +28,7 @@ export const CategoryForm = () => {
 					rules={[
 						{
 							required: true,
-							message: "Введите название (KR)",
+							message: "Введите название (UZ)",
 							max: 255,
 							min: 3,
 						},

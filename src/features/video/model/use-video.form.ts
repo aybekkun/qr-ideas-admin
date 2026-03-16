@@ -1,7 +1,7 @@
 import { errorCatch } from "@/api/error.catch"
 import { useMessage } from "@/hooks"
-import { VideoService, type IVideo, type IVideoForm } from "@/services/video"
 import type { ResponseError } from "@/services/service.types"
+import { VideoService, type IVideo, type IVideoForm } from "@/services/video"
 import { isParamsFormValidate, useFormModalStore } from "@/store"
 
 import { useMutation, useQueryClient } from "@tanstack/react-query"
