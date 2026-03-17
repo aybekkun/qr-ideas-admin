@@ -15,9 +15,12 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutRegionIndexRouteImport } from './routes/_layout/region/index'
 import { Route as LayoutProjectIndexRouteImport } from './routes/_layout/project/index'
 import { Route as LayoutHardwareIndexRouteImport } from './routes/_layout/hardware/index'
+import { Route as LayoutHardwareImportIndexRouteImport } from './routes/_layout/hardware-import/index'
 import { Route as LayoutDistrictIndexRouteImport } from './routes/_layout/district/index'
 import { Route as LayoutCategoryIndexRouteImport } from './routes/_layout/category/index'
 import { Route as LayoutProjectIdRouteImport } from './routes/_layout/project/$id'
+import { Route as LayoutHardwareImportCreateRouteImport } from './routes/_layout/hardware-import/create'
+import { Route as LayoutHardwareImportIdRouteImport } from './routes/_layout/hardware-import/$id'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -48,6 +51,12 @@ const LayoutHardwareIndexRoute = LayoutHardwareIndexRouteImport.update({
   path: '/hardware/',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutHardwareImportIndexRoute =
+  LayoutHardwareImportIndexRouteImport.update({
+    id: '/hardware-import/',
+    path: '/hardware-import/',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutDistrictIndexRoute = LayoutDistrictIndexRouteImport.update({
   id: '/district/',
   path: '/district/',
@@ -63,13 +72,27 @@ const LayoutProjectIdRoute = LayoutProjectIdRouteImport.update({
   path: '/project/$id',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutHardwareImportCreateRoute =
+  LayoutHardwareImportCreateRouteImport.update({
+    id: '/hardware-import/create',
+    path: '/hardware-import/create',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutHardwareImportIdRoute = LayoutHardwareImportIdRouteImport.update({
+  id: '/hardware-import/$id',
+  path: '/hardware-import/$id',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/': typeof LayoutIndexRoute
+  '/hardware-import/$id': typeof LayoutHardwareImportIdRoute
+  '/hardware-import/create': typeof LayoutHardwareImportCreateRoute
   '/project/$id': typeof LayoutProjectIdRoute
   '/category': typeof LayoutCategoryIndexRoute
   '/district': typeof LayoutDistrictIndexRoute
+  '/hardware-import': typeof LayoutHardwareImportIndexRoute
   '/hardware': typeof LayoutHardwareIndexRoute
   '/project': typeof LayoutProjectIndexRoute
   '/region': typeof LayoutRegionIndexRoute
@@ -77,9 +100,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/': typeof LayoutIndexRoute
+  '/hardware-import/$id': typeof LayoutHardwareImportIdRoute
+  '/hardware-import/create': typeof LayoutHardwareImportCreateRoute
   '/project/$id': typeof LayoutProjectIdRoute
   '/category': typeof LayoutCategoryIndexRoute
   '/district': typeof LayoutDistrictIndexRoute
+  '/hardware-import': typeof LayoutHardwareImportIndexRoute
   '/hardware': typeof LayoutHardwareIndexRoute
   '/project': typeof LayoutProjectIndexRoute
   '/region': typeof LayoutRegionIndexRoute
@@ -89,9 +115,12 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/auth': typeof AuthRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/hardware-import/$id': typeof LayoutHardwareImportIdRoute
+  '/_layout/hardware-import/create': typeof LayoutHardwareImportCreateRoute
   '/_layout/project/$id': typeof LayoutProjectIdRoute
   '/_layout/category/': typeof LayoutCategoryIndexRoute
   '/_layout/district/': typeof LayoutDistrictIndexRoute
+  '/_layout/hardware-import/': typeof LayoutHardwareImportIndexRoute
   '/_layout/hardware/': typeof LayoutHardwareIndexRoute
   '/_layout/project/': typeof LayoutProjectIndexRoute
   '/_layout/region/': typeof LayoutRegionIndexRoute
@@ -101,9 +130,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/auth'
     | '/'
+    | '/hardware-import/$id'
+    | '/hardware-import/create'
     | '/project/$id'
     | '/category'
     | '/district'
+    | '/hardware-import'
     | '/hardware'
     | '/project'
     | '/region'
@@ -111,9 +143,12 @@ export interface FileRouteTypes {
   to:
     | '/auth'
     | '/'
+    | '/hardware-import/$id'
+    | '/hardware-import/create'
     | '/project/$id'
     | '/category'
     | '/district'
+    | '/hardware-import'
     | '/hardware'
     | '/project'
     | '/region'
@@ -122,9 +157,12 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/auth'
     | '/_layout/'
+    | '/_layout/hardware-import/$id'
+    | '/_layout/hardware-import/create'
     | '/_layout/project/$id'
     | '/_layout/category/'
     | '/_layout/district/'
+    | '/_layout/hardware-import/'
     | '/_layout/hardware/'
     | '/_layout/project/'
     | '/_layout/region/'
@@ -179,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutHardwareIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/hardware-import/': {
+      id: '/_layout/hardware-import/'
+      path: '/hardware-import'
+      fullPath: '/hardware-import'
+      preLoaderRoute: typeof LayoutHardwareImportIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/district/': {
       id: '/_layout/district/'
       path: '/district'
@@ -200,14 +245,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProjectIdRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/hardware-import/create': {
+      id: '/_layout/hardware-import/create'
+      path: '/hardware-import/create'
+      fullPath: '/hardware-import/create'
+      preLoaderRoute: typeof LayoutHardwareImportCreateRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/hardware-import/$id': {
+      id: '/_layout/hardware-import/$id'
+      path: '/hardware-import/$id'
+      fullPath: '/hardware-import/$id'
+      preLoaderRoute: typeof LayoutHardwareImportIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutHardwareImportIdRoute: typeof LayoutHardwareImportIdRoute
+  LayoutHardwareImportCreateRoute: typeof LayoutHardwareImportCreateRoute
   LayoutProjectIdRoute: typeof LayoutProjectIdRoute
   LayoutCategoryIndexRoute: typeof LayoutCategoryIndexRoute
   LayoutDistrictIndexRoute: typeof LayoutDistrictIndexRoute
+  LayoutHardwareImportIndexRoute: typeof LayoutHardwareImportIndexRoute
   LayoutHardwareIndexRoute: typeof LayoutHardwareIndexRoute
   LayoutProjectIndexRoute: typeof LayoutProjectIndexRoute
   LayoutRegionIndexRoute: typeof LayoutRegionIndexRoute
@@ -215,9 +277,12 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutHardwareImportIdRoute: LayoutHardwareImportIdRoute,
+  LayoutHardwareImportCreateRoute: LayoutHardwareImportCreateRoute,
   LayoutProjectIdRoute: LayoutProjectIdRoute,
   LayoutCategoryIndexRoute: LayoutCategoryIndexRoute,
   LayoutDistrictIndexRoute: LayoutDistrictIndexRoute,
+  LayoutHardwareImportIndexRoute: LayoutHardwareImportIndexRoute,
   LayoutHardwareIndexRoute: LayoutHardwareIndexRoute,
   LayoutProjectIndexRoute: LayoutProjectIndexRoute,
   LayoutRegionIndexRoute: LayoutRegionIndexRoute,

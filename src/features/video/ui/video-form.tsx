@@ -5,11 +5,10 @@ import { Button, Flex, Form, Input } from "antd"
 import { useVideoForm } from "../model"
 
 export const VideoForm = () => {
-	const { form, onFinish, isLoading} = useVideoForm()
+	const { form, onFinish, isLoading } = useVideoForm()
 
 	return (
 		<FormModal title={"видео"} form={form} loading={isLoading}>
-
 			<Form form={form} layout="vertical" onFinish={onFinish}>
 				<Form.Item<IVideoForm>
 					name={"name_kaa"}

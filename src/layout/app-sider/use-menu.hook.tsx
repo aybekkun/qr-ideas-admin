@@ -22,6 +22,11 @@ export const menuItems = [
 		label: "Оборудование",
 	},
 	{
+		key: "/hardware-import",
+		icon: <FundProjectionScreenOutlined />,
+		label: "Инвестиционные проекты",
+	},
+	{
 		key: "/category",
 		icon: <MenuUnfoldOutlined />,
 		label: "Категории",

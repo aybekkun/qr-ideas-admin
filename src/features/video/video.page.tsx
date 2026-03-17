@@ -1,8 +1,8 @@
 import { PageHeader } from "@/components/shared"
+import { AddButton, DataTable } from "@/components/ui"
 import { useFilters } from "@/hooks"
 import { useGetAllVideo } from "@/services/video"
 import { useVideoColumns } from "./model"
-import { AddButton, DataTable } from "@/components/ui"
 import { VideoForm } from "./ui/video-form"
 
 export const VideoPage = () => {
