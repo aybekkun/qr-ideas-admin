@@ -20,7 +20,7 @@ export const HardwareImportPage = () => {
 
 	return (
 		<>
-			<PageHeader title="Инвестиционные проекты">
+			<PageHeader title="Оборудование">
 				<Button
 					type="primary"
 					icon={<PlusOutlined />}
